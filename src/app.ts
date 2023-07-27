@@ -13,7 +13,6 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
-
 // sequelize
 //   .sync({ force: false })
 //   .then(() => {

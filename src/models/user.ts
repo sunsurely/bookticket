@@ -6,11 +6,13 @@ import Sequelize, {
   Model,
   DataTypes,
 } from 'sequelize';
+import Reservation from './reservation';
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-  declare user_id: CreationOptional<number>;
+  declare user_id: number;
   declare email: string;
   declare nickname: string;
+  declare point: number;
   declare call: CreationOptional<string>;
   declare password: CreationOptional<string>;
   declare provider: CreationOptional<string>;
@@ -41,12 +43,18 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
           allowNull: false,
         },
         provider: {
-          type: DataTypes.STRING,
+          type: DataTypes.ENUM('local', 'kakao'),
           allowNull: false,
+          defaultValue: 'local',
         },
         sns_id: {
           type: DataTypes.STRING(30),
           allowNull: true,
+        },
+        point: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          defaultValue: 1000000,
         },
       },
       {
@@ -61,7 +69,9 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     );
   }
 
-  static associate() {}
+  static associate() {
+    this.hasMany(Reservation, { foreignKey: 'user_id', sourceKey: 'user_id' });
+  }
 }
 
 export default User;
