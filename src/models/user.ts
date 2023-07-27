@@ -4,15 +4,14 @@ import Sequelize, {
   InferAttributes,
   InferCreationAttributes,
   Model,
-  DataTypes,
 } from 'sequelize';
 import Reservation from './reservation';
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-  declare user_id: number;
+  declare user_id: CreationOptional<number>;
   declare email: string;
   declare nickname: string;
-  declare point: number;
+  declare point: CreationOptional<string>;
   declare call: CreationOptional<string>;
   declare password: CreationOptional<string>;
   declare provider: CreationOptional<string>;
@@ -22,37 +21,37 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     User.init(
       {
         user_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
         email: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: false,
         },
         nickname: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: false,
         },
         call: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: true,
         },
         password: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: false,
         },
         provider: {
-          type: DataTypes.ENUM('local', 'kakao'),
+          type: Sequelize.ENUM('local', 'kakao'),
           allowNull: false,
           defaultValue: 'local',
         },
         sns_id: {
-          type: DataTypes.STRING(30),
+          type: Sequelize.STRING(30),
           allowNull: true,
         },
         point: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: true,
           defaultValue: 1000000,
         },

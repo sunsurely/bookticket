@@ -4,7 +4,6 @@ import Sequelize, {
   InferAttributes,
   InferCreationAttributes,
   Model,
-  DataTypes,
 } from 'sequelize';
 
 import Reservation from './reservation';
@@ -22,28 +21,28 @@ class Seat extends Model<InferAttributes<Seat>, InferCreationAttributes<Seat>> {
     Seat.init(
       {
         seat_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
         performance_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         seat_number: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: false,
         },
         price: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         seat_grade: {
-          type: DataTypes.ENUM('b', 'a', 's', 'r', 'vip'),
+          type: Sequelize.ENUM('b', 'a', 's', 'r', 'vip'),
           allowNull: false,
         },
         reserved: {
-          type: DataTypes.BOOLEAN,
+          type: Sequelize.BOOLEAN,
           allowNull: false,
           defaultValue: false,
         },

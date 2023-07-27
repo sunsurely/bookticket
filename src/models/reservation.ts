@@ -4,7 +4,6 @@ import Sequelize, {
   InferAttributes,
   InferCreationAttributes,
   Model,
-  DataTypes,
 } from 'sequelize';
 import User from './user';
 import Seat from './seat';
@@ -24,24 +23,24 @@ class Reservation extends Model<
     Reservation.init(
       {
         reservation_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
         seat_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         performance_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         user_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         date: {
-          type: DataTypes.DATE,
+          type: Sequelize.DATE,
           allowNull: false,
         },
       },

@@ -13,14 +13,14 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
-// sequelize
-//   .sync({ force: false })
-//   .then(() => {
-//     console.log('데이터베이스 연결 성공');
-//   })
-//   .catch((error: Error) => {
-//     console.error(error);
-//   });
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log('데이터베이스 연결 성공');
+  })
+  .catch((error: Error) => {
+    console.error(error);
+  });
 app.use(morgan('dev'));
 
 app.use('/', routes);

@@ -4,10 +4,8 @@ import Sequelize, {
   InferAttributes,
   InferCreationAttributes,
   Model,
-  DataTypes,
 } from 'sequelize';
 
-import Seat from './seat';
 import Reservation from './reservation';
 
 class Performance extends Model<
@@ -23,20 +21,20 @@ class Performance extends Model<
     Performance.init(
       {
         performance_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
         title: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: false,
         },
         date: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: false,
         },
         address: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: false,
         },
       },
@@ -53,10 +51,6 @@ class Performance extends Model<
   }
 
   static associate() {
-    this.hasMany(Seat, {
-      foreignKey: 'performance_id',
-      sourceKey: 'performance_id',
-    });
     this.hasMany(Reservation, {
       foreignKey: 'performance_id',
       sourceKey: 'performance_id',
