@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
 import routes from './routes';
-import { sequelize } from './models';
+// import { sequelize } from './models';
 
 dotenv.config();
 const app = express();
