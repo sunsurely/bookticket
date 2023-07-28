@@ -10,12 +10,11 @@ import Reservation from './reservation';
 import Performance from './performance';
 
 class Seat extends Model<InferAttributes<Seat>, InferCreationAttributes<Seat>> {
-  declare seat_id: number;
+  declare seat_id: CreationOptional<number>;
   declare performance_id: number;
-  declare seat_number: string;
+  declare seat_number: number;
   declare seat_grade: string;
   declare price: number;
-  declare reserved: boolean;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     Seat.init(
@@ -30,7 +29,7 @@ class Seat extends Model<InferAttributes<Seat>, InferCreationAttributes<Seat>> {
           allowNull: false,
         },
         seat_number: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         price: {
@@ -40,11 +39,6 @@ class Seat extends Model<InferAttributes<Seat>, InferCreationAttributes<Seat>> {
         seat_grade: {
           type: Sequelize.ENUM('B', 'A', 'S', 'R', 'VIP'),
           allowNull: false,
-        },
-        reserved: {
-          type: Sequelize.BOOLEAN,
-          allowNull: false,
-          defaultValue: false,
         },
       },
       {

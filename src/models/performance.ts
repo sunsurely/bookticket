@@ -14,7 +14,8 @@ class Performance extends Model<
 > {
   declare performance_id: CreationOptional<number>;
   declare title: string;
-  declare date: Date;
+  declare description: string;
+  declare date: string;
   declare address: string;
 
   static initiate(sequelize: Sequelize.Sequelize) {
@@ -34,6 +35,10 @@ class Performance extends Model<
           allowNull: false,
         },
         address: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        description: {
           type: Sequelize.STRING,
           allowNull: false,
         },

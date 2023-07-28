@@ -1,24 +1,57 @@
+import { Transaction } from 'sequelize';
+import { sequelize } from '../models';
+
 import { ShowRepository } from '../repositories/show_repository';
+
+type Meta = {
+  title: string;
+  description: string;
+  address: string;
+};
+
+type SeatInfo = {
+  seat_number: number;
+  seat_grade: string;
+  price: number;
+};
 
 export class ShowService {
   showRepository = new ShowRepository();
 
-  createPerformance = async (title: string, date: Date, address: string) => {
+  createPerformance = async (
+    showMetadata: Meta,
+    seatInfos: Array<SeatInfo>,
+    showTimes: Array<string>
+  ) => {
+    const t = await sequelize.transaction({
+      isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+    });
     try {
-      const performance = await this.showRepository.createPerformance(
-        title,
-        date,
-        address
-      );
-      if (!performance) {
-        throw {
-          status: 402,
-          errorMessage: '공연 등록 실패',
-        };
+      for (let i = 0; i < showTimes.length; i++) {
+        const show = await this.showRepository.createPerformance(
+          showMetadata.title,
+          showMetadata.description,
+          showTimes[i],
+          showMetadata.address,
+          t
+        );
+
+        for (let j = 0; j < seatInfos.length; j++) {
+          const seat = seatInfos[j];
+          await this.showRepository.createSeat(
+            seat.seat_number,
+            seat.seat_grade,
+            seat.price,
+            show.performance_id,
+            t
+          );
+        }
       }
-      return performance;
+
+      t.commit();
     } catch (error) {
-      console.error('show_service_createPerformance()', error);
+      console.error(error);
+      t.rollback();
       throw error;
     }
   };

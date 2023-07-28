@@ -11,6 +11,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare user_id: CreationOptional<number>;
   declare email: string;
   declare nickname: string;
+  declare status: CreationOptional<string>;
   declare point: CreationOptional<string>;
   declare call: CreationOptional<string>;
   declare password: CreationOptional<string>;
@@ -49,6 +50,11 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
         sns_id: {
           type: Sequelize.STRING(30),
           allowNull: true,
+        },
+        status: {
+          type: Sequelize.ENUM('normal', 'admin'),
+          allowNull: false,
+          defaultValue: 'normal',
         },
         point: {
           type: Sequelize.INTEGER,

@@ -6,25 +6,31 @@ export class ShowController {
 
   createPerformance = async (req: Request, res: Response) => {
     try {
-      const { title, date, address } = req.body;
-      if (!title) {
-        return res.status(400).json({ errorMessage: 'title을 입력해 주세요' });
-      }
-      if (!date) {
-        return res.status(400).json({ errorMessage: 'date을 입력해 주세요' });
-      }
-      if (!address) {
+      const { showMetadata, seatInfos, showTimes } = req.body;
+
+      if (!showMetadata) {
         return res
-          .status(400)
-          .json({ errorMessage: 'address을 입력해 주세요' });
+          .status(401)
+          .json({ errorMessage: '공연정보를 입력해주세요' });
+      }
+      if (!seatInfos) {
+        return res
+          .status(401)
+          .json({ errorMessage: '좌석정보를 입력해주세요' });
+      }
+      if (!showTimes) {
+        return res
+          .status(401)
+          .json({ errorMessage: '날짜정보를 입력해주세요' });
       }
 
-      const performance = await this.showService.createPerformance(
-        title,
-        date,
-        address
+      await this.showService.createPerformance(
+        showMetadata,
+        seatInfos,
+        showTimes
       );
-      res.status(201).json(performance);
+
+      res.status(201).json({ message: '공연등록이 완료되었습니다.' });
     } catch (error) {
       console.error('show_controller_createPerformance()', error);
       res.status(401).json({ error: error });
