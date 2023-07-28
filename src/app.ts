@@ -2,11 +2,13 @@ import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+const passportConfig = require('./passport/');
 
 import routes from './routes';
 import { sequelize } from './models';
 
 dotenv.config();
+
 const app = express();
 app.set('port', process.env.PORT || 3000);
 
@@ -22,7 +24,7 @@ sequelize
     console.error(error);
   });
 app.use(morgan('dev'));
-
+passportConfig();
 app.use('/', routes);
 
 app.listen(app.get('port'), () => {

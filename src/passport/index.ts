@@ -2,13 +2,10 @@ const passport = require('passport');
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as KakaoStrategy, StrategyOption } from 'passport-kakao';
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 import { User } from '../models';
 
-const localConfig = { usernameField: 'account', passwordField: 'password' };
+const localConfig = { usernameField: 'email', passwordField: 'password' };
 
 const kakaoConfig: StrategyOption = {
   clientID: process.env.KAKAO_CLIENT_ID || '',
@@ -21,6 +18,7 @@ const localVerify = async (email: string, password: string, done: any) => {
       done(null, false, { message: '이메일을 입력해주세요' });
       return;
     }
+
     const user = await User.findOne({ where: { email } });
     if (!user) {
       done(null, false, { message: '존재하지 않는 사용자 입니다.' });
@@ -71,7 +69,9 @@ const KakaoVerify = async (
   }
 };
 
-module.exports = () => {
+const passportConfig = () => {
   passport.use('local', new LocalStrategy(localConfig, localVerify));
   passport.use('kakao', new KakaoStrategy(kakaoConfig, KakaoVerify));
 };
+
+module.exports = passportConfig;

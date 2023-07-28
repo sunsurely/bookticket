@@ -12,7 +12,7 @@ class Performance extends Model<
   InferAttributes<Performance>,
   InferCreationAttributes<Performance>
 > {
-  declare performance_id: number;
+  declare performance_id: CreationOptional<number>;
   declare title: string;
   declare date: Date;
   declare address: string;

@@ -1,4 +1,4 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 
 export const authorizated = async (
@@ -18,13 +18,12 @@ export const authorizated = async (
   }
   process.env.COOKIE_SECRET;
   try {
-    console.log('userState', process.env.COOKIE_SECRET);
-    const { user_id } = jwt.verify(
+    const { user } = jwt.verify(
       authToken,
-      process.env.COOKIE_SECRET as string // env 파일의 COOKIE_SECRET를 정상적으로 불러오는지 확인 예정
+      process.env.COOKIE_SECRET as Secret
     ) as JwtPayload;
 
-    res.locals.user_id = user_id;
+    res.locals.user_id = user.user_id;
     next();
   } catch (error) {
     console.log(error);
@@ -32,7 +31,11 @@ export const authorizated = async (
   }
 };
 
-export const isLoggedIn = async (req: Request, res: Response, next: any) => {
+export const isLoggedIn = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { authorization } = req.cookies;
 
   if (!authorization) {
@@ -43,15 +46,15 @@ export const isLoggedIn = async (req: Request, res: Response, next: any) => {
 
   const { authType, authToken } = (authorization ?? '').split(' ');
 
-  const { user } = jwt.verify(
-    authToken,
-    process.env.COOKIE_SECRET as string
-  ) as JwtPayload;
   if (!authorization || authType !== 'Bearer' || !authToken) {
     res.locals.isLoggedIn = false;
     next();
     return;
   }
+  const { user } = jwt.verify(
+    authToken,
+    process.env.COOKIE_SECRET as string
+  ) as JwtPayload;
 
   res.locals.isLoggedIn = true;
   console.log(user);

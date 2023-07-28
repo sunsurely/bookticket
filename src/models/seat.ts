@@ -38,7 +38,7 @@ class Seat extends Model<InferAttributes<Seat>, InferCreationAttributes<Seat>> {
           allowNull: false,
         },
         seat_grade: {
-          type: Sequelize.ENUM('b', 'a', 's', 'r', 'vip'),
+          type: Sequelize.ENUM('B', 'A', 'S', 'R', 'VIP'),
           allowNull: false,
         },
         reserved: {

@@ -37,12 +37,31 @@ export class UserController {
         nickname,
         call,
         password,
-        confirm,
-        res
+        confirm
       );
+
+      return res.status(201).json({ message: '회원가입에 성공했습니다.' });
     } catch (error) {
-      console.log('user_controller쪽', error);
+      console.log('user_controller_createUser()', error);
       res.status(400).json({ error: error });
+    }
+  };
+
+  readProfile = async (req: Request, res: Response) => {
+    try {
+      const user_id = res.locals.user_id;
+      if (!user_id) {
+        return res
+          .status(400)
+          .json({ errorMessage: 'user_id가 정상적으로 수신되지 않았습니다.' });
+      }
+
+      const profile = await this.userService.readProfile(user_id);
+
+      return res.status(200).json({ profile });
+    } catch (error) {
+      console.error('user_controller_readProfile()', error);
+      return res.status(400).json({ error: error });
     }
   };
 }

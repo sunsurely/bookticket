@@ -8,4 +8,6 @@ const router = express.Router();
 
 router.post('/signup', userController.createUser);
 
+router.get('/profiles', authorizated, userController.readProfile);
+
 export default router;
