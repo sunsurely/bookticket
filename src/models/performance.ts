@@ -7,6 +7,7 @@ import Sequelize, {
 } from 'sequelize';
 
 import Reservation from './reservation';
+import Seat from './seat';
 
 class Performance extends Model<
   InferAttributes<Performance>,
@@ -57,6 +58,10 @@ class Performance extends Model<
 
   static associate() {
     this.hasMany(Reservation, {
+      foreignKey: 'performance_id',
+      sourceKey: 'performance_id',
+    });
+    this.hasMany(Seat, {
       foreignKey: 'performance_id',
       sourceKey: 'performance_id',
     });
