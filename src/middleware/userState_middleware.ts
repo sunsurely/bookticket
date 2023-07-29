@@ -1,5 +1,6 @@
 import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
+import { User } from '../models';
 
 export const authorizated = async (
   req: Request,
@@ -23,7 +24,7 @@ export const authorizated = async (
       process.env.COOKIE_SECRET as Secret
     ) as JwtPayload;
 
-    res.locals.user_id = user.user_id;
+    res.locals.user = user;
     next();
   } catch (error) {
     console.log(error);
@@ -44,10 +45,10 @@ export const isLoggedIn = async (
     return;
   }
 
-  const { authType, authToken } = (authorization ?? '').split(' ');
-
-  if (!authorization || authType !== 'Bearer' || !authToken) {
+  const [authType, authToken] = (authorization ?? '').split(' ');
+  if (authType !== 'Bearer' || !authToken) {
     res.locals.isLoggedIn = false;
+
     next();
     return;
   }
@@ -57,8 +58,6 @@ export const isLoggedIn = async (
   ) as JwtPayload;
 
   res.locals.isLoggedIn = true;
-  console.log(user);
   res.locals.user_id = user.user_id;
-  res.locals.status = user.status;
   next();
 };

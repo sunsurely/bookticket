@@ -9,7 +9,8 @@ export class UserService {
     nickname: string,
     call: string,
     password: string,
-    confirm: string
+    confirm: string,
+    status: string
   ) => {
     const pattern = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{3,}$/;
 
@@ -41,7 +42,7 @@ export class UserService {
       }
       const hash = await bcrypt.hash(password, 12);
 
-      await this.userRepository.createUser(email, nickname, call, hash);
+      await this.userRepository.createUser(email, nickname, call, hash, status);
 
       return;
     } catch (error) {

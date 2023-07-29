@@ -52,7 +52,7 @@ export class ShowRepository {
   readPerformanceDetail = async (performance_id: number) => {
     const performance = await Performance.findOne({
       where: { performance_id },
-      attributes: ['title', 'description', 'address', 'porformance_id'],
+      attributes: ['title', 'description', 'address', 'performance_id'],
       include: {
         model: Seat,
         attributes: ['seat_number', 'seat_grade', 'price'],
@@ -75,8 +75,6 @@ export class ShowRepository {
         },
       },
     });
-
-    console.log('레포지토리쪽', performance);
 
     return performance;
   };

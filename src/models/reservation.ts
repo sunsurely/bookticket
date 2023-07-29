@@ -13,11 +13,10 @@ class Reservation extends Model<
   InferAttributes<Reservation>,
   InferCreationAttributes<Reservation>
 > {
-  declare reservation_id: number;
+  declare reservation_id: CreationOptional<number>;
   declare seat_id: number;
-  declare performance_id: number;
   declare user_id: number;
-  declare date: Date;
+  declare performance_id: number;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     Reservation.init(
@@ -31,16 +30,12 @@ class Reservation extends Model<
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        performance_id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-        },
         user_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        date: {
-          type: Sequelize.DATE,
+        performance_id: {
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
       },
@@ -58,11 +53,11 @@ class Reservation extends Model<
 
   static associate() {
     this.belongsTo(User, { foreignKey: 'user_id', targetKey: 'user_id' });
+    this.belongsTo(Seat, { foreignKey: 'seat_id', targetKey: 'seat_id' });
     this.belongsTo(Performance, {
       foreignKey: 'performance_id',
       targetKey: 'performance_id',
     });
-    this.belongsTo(Seat, { foreignKey: 'seat_id', targetKey: 'seat_id' });
   }
 }
 

@@ -5,7 +5,7 @@ export class UserController {
   userService = new UserService();
   createUser = async (req: Request, res: Response) => {
     try {
-      const { email, nickname, call, password, confirm } = req.body;
+      const { email, nickname, call, password, confirm, status } = req.body;
       if (!email) {
         return res
           .status(400)
@@ -37,7 +37,8 @@ export class UserController {
         nickname,
         call,
         password,
-        confirm
+        confirm,
+        status
       );
 
       return res.status(201).json({ message: '회원가입에 성공했습니다.' });
@@ -49,7 +50,7 @@ export class UserController {
 
   readProfile = async (req: Request, res: Response) => {
     try {
-      const user_id = res.locals.user_id;
+      const user_id = res.locals.user.user_id;
       if (!user_id) {
         return res
           .status(400)

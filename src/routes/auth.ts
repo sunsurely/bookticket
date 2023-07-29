@@ -15,6 +15,6 @@ router.post('/kakao', isLoggedIn, kakaoAuth);
 
 router.post('/kakao/callback', kakaoCallback);
 
-router.post('/logout', logoutController);
+router.post('/logout', isLoggedIn, logoutController);
 
 export default router;

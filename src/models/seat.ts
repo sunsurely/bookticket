@@ -15,6 +15,7 @@ class Seat extends Model<InferAttributes<Seat>, InferCreationAttributes<Seat>> {
   declare seat_number: number;
   declare seat_grade: string;
   declare price: number;
+  declare reserved: CreationOptional<boolean>;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     Seat.init(
@@ -40,6 +41,11 @@ class Seat extends Model<InferAttributes<Seat>, InferCreationAttributes<Seat>> {
           type: Sequelize.ENUM('B', 'A', 'S', 'R', 'VIP'),
           allowNull: false,
         },
+        reserved: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: false,
+        },
       },
       {
         sequelize,
@@ -54,7 +60,7 @@ class Seat extends Model<InferAttributes<Seat>, InferCreationAttributes<Seat>> {
   }
 
   static associate() {
-    this.hasMany(Reservation, { foreignKey: 'seat_id', sourceKey: 'seat_id' });
+    this.hasOne(Reservation, { foreignKey: 'seat_id', sourceKey: 'seat_id' });
     this.belongsTo(Performance, {
       foreignKey: 'performance_id',
       targetKey: 'performance_id',

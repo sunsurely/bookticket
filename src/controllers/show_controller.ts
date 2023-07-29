@@ -1,4 +1,3 @@
-import { performance } from 'perf_hooks';
 import { ShowService } from '../service/show_service';
 import { Request, Response } from 'express';
 
@@ -8,6 +7,12 @@ export class ShowController {
   createPerformance = async (req: Request, res: Response) => {
     try {
       const { showMetadata, seatInfos, showTimes } = req.body;
+      const user = res.locals.user;
+      if (user.status !== 'admin') {
+        return res
+          .status(401)
+          .json({ errorMessage: '해당 기능은 관리자 계정만 이용가능합니다.' });
+      }
 
       if (!showMetadata) {
         return res

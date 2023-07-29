@@ -5,6 +5,7 @@ const router = express.Router();
 import userRouter from './user';
 import authRouter from './auth';
 import showRouter from './performance';
+import reservationRouter from './reservation';
 
 const defaultRoutes = [
   {
@@ -18,6 +19,10 @@ const defaultRoutes = [
   {
     path: '/',
     route: showRouter,
+  },
+  {
+    path: '/',
+    route: reservationRouter,
   },
 ];
 

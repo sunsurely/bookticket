@@ -5,13 +5,15 @@ export class UserRepository {
     email: string,
     nickname: string,
     call: string,
-    hash: string
+    hash: string,
+    status: string
   ) => {
     await User.create({
       email,
       nickname,
       call,
       password: hash,
+      status,
     });
   };
 

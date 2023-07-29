@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/cookie-parser": "^1.4.3",
     "@types/dotenv": "^8.2.0",
     "@types/morgan": "^1.9.4",
     "@types/sequelize": "^4.28.15",
@@ -13,6 +11,7 @@
     "jsonwebtoken": "^9.0.1",
     "morgan": "^1.10.0",
     "mysql2": "^3.5.2",
+    "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
@@ -23,7 +22,10 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.3",
     "@types/express": "^4.17.17",
+    "@types/express-session": "^1.17.7",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.4.5",
     "@types/passport": "^1.0.12",

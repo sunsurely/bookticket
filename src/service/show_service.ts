@@ -2,7 +2,6 @@ import { Transaction } from 'sequelize';
 import { sequelize } from '../models';
 
 import { ShowRepository } from '../repositories/show_repository';
-import { performance } from 'perf_hooks';
 
 type Meta = {
   title: string;

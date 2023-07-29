@@ -12,7 +12,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare email: string;
   declare nickname: string;
   declare status: CreationOptional<string>;
-  declare point: CreationOptional<string>;
+  declare point: CreationOptional<number>;
   declare call: CreationOptional<string>;
   declare password: CreationOptional<string>;
   declare provider: CreationOptional<string>;
